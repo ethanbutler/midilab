@@ -1,0 +1,79 @@
+body {
+  background: #56a0d3;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+#root {
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.Trigger {
+  background: blue;
+  display: inline-block;
+  padding: 10px;
+  width: 25vw;
+  height: 25vw;
+
+  select {
+    display: none;
+  }
+
+  &-Wrap {
+
+  }
+
+  &-Pad {
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+    background: red;
+  }
+}
+
+.Slider {
+  height: 10vh;
+  width: 100%;
+  background: yellow;
+  position: relative;
+  margin: 5vh 0 10vh;
+  input {
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+  > div {
+    height: 100%;
+    background: green;
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    pointer-events: none;
+  }
+}
+
+.Bender {
+  height: 10vh;
+  width: 100%;
+  background: orange;
+  position: relative;
+  margin: 5vh 0 10vh;
+  input {
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+  > div {
+    height: 100%;
+    background: purple;
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    pointer-events: none;
+  }
+}
