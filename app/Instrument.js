@@ -1,7 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import io from './io'
+// import io from './io'
 import { events } from '../lib/shared'
+
+const io = {
+  emit: () => null,
+}
 
 class Instrument extends React.Component {
   constructor(props) {

@@ -18,7 +18,6 @@ class Bender extends React.Component {
     return (
       <div className="Bender">
         <div style={{ width: `${value / 127 * 100}%` }} />
-        <input type="range" min="0" max="127" onChange={this.onChange} value={value} />
       </div>
     )
   }

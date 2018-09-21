@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 })
 
 http.listen(port, () => {
-  socketInit(http)
+  // socketInit(http)
 
   console.log(`Listening!`)
   const address = `http://${ip.address()}:${port}`

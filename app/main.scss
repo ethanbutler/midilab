@@ -1,79 +1,239 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans');
+
+$itemPadding: 10px;
+$borderWidth: $itemPadding / 4;
+$dotSize: 1vw;
+$dotPadding: $itemPadding / 8;
+
+// Colors
+$white: #fff;
+$black: #333;
+$purple: #2F1E45;
+$purple-lt: #8A38F5;
+$pink: #FF4A8E;
+$pink-lt: #EB88AD;
+$orange: #FA574B;
+$blue: #3E4E96;
+$mint: #76DBD7;
+$red: #EB3058;
+$green: #89FFB2;
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  transition: all .1s ease;
+}
+
 body {
-  background: #56a0d3;
-  padding: 0;
   margin: 0;
   overflow: hidden;
+  text-transform: uppercase;
+  font-family: 'Fira Sans', sans-serif;
 }
 
-#root {
-  overflow: hidden;
-}
+.Pegboard {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
 
-* {
-  box-sizing: border-box;
-}
+  background: linear-gradient($purple, darken($purple, 2));
 
-.Trigger {
-  background: blue;
-  display: inline-block;
-  padding: 10px;
-  width: 25vw;
-  height: 25vw;
-
-  select {
-    display: none;
+  &-Row {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
-  &-Wrap {
+  &-Col {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: $dotPadding solid rgba($purple-lt, .5);
 
+    &:hover {
+      background: $purple-lt;
+      .Dot {
+        background: $purple;
+      }
+    }
   }
 
-  &-Pad {
-    border-radius: 4px;
-    width: 100%;
-    height: 100%;
-    background: red;
+  &-Item {
+    padding: $itemPadding;
+    transition: padding .2s ease;
+
+    > * {
+      width: 100%;
+      height: 100%;
+    }
   }
+
+  .Dot {
+    width: $dotSize;
+    height: $dotSize;
+    background: rgba($purple-lt, .4);
+    border-radius: 100%;
+  }
+
 }
 
 .Slider {
-  height: 10vh;
-  width: 100%;
-  background: yellow;
   position: relative;
-  margin: 5vh 0 10vh;
-  input {
-    display: block;
+  background: rgba($pink-lt, .7);
+  border: $borderWidth solid $pink;
+  border-radius: $borderWidth;
+  overflow: hidden;
+
+  &-Inner {
     width: 100%;
     height: 100%;
-    opacity: 0;
+    background: linear-gradient(to right, $pink, $orange);
   }
-  > div {
-    height: 100%;
-    background: green;
+
+  &--Vertical {
+    background: rgba($mint, .7);
+    border-color: $mint;
+  }
+
+  &--Vertical &-Inner {
     position: absolute;
-    top: 0; bottom: 0; left: 0; right: 0;
-    pointer-events: none;
+    bottom: 0;
+    background: linear-gradient(to top, $mint, $green);
   }
 }
 
-.Bender {
-  height: 10vh;
-  width: 100%;
-  background: orange;
+.XYPad {
+  flex: 1;
   position: relative;
-  margin: 5vh 0 10vh;
-  input {
-    display: block;
+  border: $borderWidth solid darken($blue, 5);
+  overflow: hidden;
+
+  &-Wrap {
+    display: flex;
+    flex-direction: column;
+    background: rgba(darken($blue, 5), .3);
+    border-radius: $borderWidth;
+    overflow: hidden;
+  }
+
+  &-Freeze {
+    display: flex;
+    color: $mint;
+    background: darken($blue, 5);
+    justify-content: center;
+    align-items: center;
+    padding: $borderWidth 0;
+  }
+
+  &-FreezeLabel {
+    font-size: .7rem;
+    opacity: .2;
+  }
+
+  &-FreezeButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1rem;
+    height: 1rem;
+    margin-left: $borderWidth;
+    opacity: .2;
+    color: $blue;
+    background: $mint;
+    border-radius: 100%;
+    font-size: .6rem;
+  }
+
+  &-Inner {
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(rgba($mint, .4), rgba($blue, .8) 30%);
+    border-radius: 100%;
+    &:before,
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(lighten($mint, 20), .4)
+    }
+    &:before {
+      width: 100%;
+      height: $borderWidth;
+    }
+    &:after {
+      height: 100%;
+      width: $borderWidth;
+    }
+  }
+}
+
+.Trigger {
+  select {
+    display: none;
+  }
+  &-Inner {
+    position: relative;
     width: 100%;
     height: 100%;
-    opacity: 0;
+    object-fit: cover;
+    border-radius: $borderWidth * 2;
+    overflow: hidden;
+    background: $white;
   }
-  > div {
-    height: 100%;
-    background: purple;
+  &-Pad {
     position: absolute;
-    top: 0; bottom: 0; left: 0; right: 0;
-    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    background: $red;
+  }
+}
+
+.Sequencer {
+  display: flex;
+  justify-content: space-between;
+  background: mix($purple-lt, $purple);
+  padding: $itemPadding;
+  border-radius:$itemPadding * 2;
+  &-Inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &-Pad {
+    width: $dotSize * 3;
+    height: $dotSize * 3;
+    background: $white;
+    border-radius: 100%;
+    transition: .05s ease-in;
+    &.isPlaying {
+      // background: $orange;
+      // transform: scale(.5);
+    }
+    &.isOn {
+      background: $pink;
+    }
+    &.isPlaying.isOn {
+      transform: scale(1.2);
+    }
+  }
+}
+
+.FilterSequencer {
+  display: flex;
+  &-Bar {
+    height: 100%;
+    background: black;
+    &.isPlaying {
+      background: white;
+    }
   }
 }

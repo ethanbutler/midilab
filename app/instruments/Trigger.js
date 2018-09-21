@@ -34,17 +34,24 @@ class Trigger extends React.Component {
   }
 
   render() {
+    const { isPlaying } = this.state
+    let padStyle = {}
+    if(isPlaying) {
+      padStyle.opacity = .5
+    }
     return (
       <div className="Trigger">
         <select onChange={e => this.note(e.target.value)} value={this.state.note}>
           {pitches.map(pitch => (<option key={pitch}>{pitch}</option>))}
         </select>
-        <div
-          className="Trigger-Pad"
-          onTouchStart={this.on}
-          onTouchEnd={this.off}
-          style={{ background: this.state.isPlaying ? 'white' : 'red' }}
-        />
+        <div className="Trigger-Inner">
+          <div
+            className="Trigger-Pad"
+            onTouchStart={this.on}
+            onTouchEnd={this.off}
+            style={padStyle}
+          />
+        </div>
       </div>
     )
   }
