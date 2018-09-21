@@ -200,7 +200,8 @@ body {
 .Sequencer {
   display: flex;
   justify-content: space-between;
-  background: mix($purple-lt, $purple);
+  background: $purple;
+  border: 1px solid $purple-lt;
   padding: $itemPadding;
   border-radius:$itemPadding * 2;
   &-Inner {
@@ -215,8 +216,7 @@ body {
     border-radius: 100%;
     transition: .05s ease-in;
     &.isPlaying {
-      // background: $orange;
-      // transform: scale(.5);
+      background: darken($white, 10);
     }
     &.isOn {
       background: $pink;
@@ -229,9 +229,17 @@ body {
 
 .FilterSequencer {
   display: flex;
+  background: rgba($purple, .5);
+  align-items: flex-end;
+  border-radius: $itemPadding;
+  overflow: hidden;
+  border: $borderWidth solid darken($purple-lt, 20);
+  justify-content: space-around;
   &-Bar {
+    flex: 1;
     height: 100%;
-    background: black;
+    background: linear-gradient(to bottom, $purple-lt, darken($purple-lt, 20));
+    transition: none;
     &.isPlaying {
       background: white;
     }

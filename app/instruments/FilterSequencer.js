@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+const MIDI_MAX_VALUE = 127
+
 const isBeat = (beat, division) => (beat % (96 / division)) === 0
 const getBeat = (beat, division) => (beat / (96 / division))
 
@@ -14,6 +16,8 @@ class FilterSequencer extends React.Component {
       controller: props.controller,
     }
     this.el = null
+    this.touch = this.touch.bind(this)
+    this.play = this.play.bind(this)
   }
 
   componentDidMount() {
@@ -30,11 +34,14 @@ class FilterSequencer extends React.Component {
     const [touch] = e.touches
     const { clientX, clientY } = touch
     const { left, right, top, bottom } = this.el.getBoundingClientRect()
-    const pct = (clientY - bottom) / (top)
+    const pct = (bottom - clientY) / (bottom - top)
     const divisions = (right - left) / values.length
-    const index =  ((clientX - left) / divisions)|0
 
+    let index =  ((clientX - left) / divisions)|0
     let value = (pct * MIDI_MAX_VALUE)|0
+
+    if(index < 0 || index > values.length - 1) return
+
     if(value < 0) value = 0
     if(value > MIDI_MAX_VALUE) value = MIDI_MAX_VALUE
 
@@ -50,7 +57,7 @@ class FilterSequencer extends React.Component {
     const { controller, values } = this.state
     const { controlChange } = this.props
     if(isBeat(beat, values.length)) {
-      const activeBeat = getBeat(beat, value.length)
+      const activeBeat = getBeat(beat, values.length)
       const value = values[activeBeat]
       this.setState({ activeBeat })
       controlChange({ controller, value })
@@ -63,7 +70,11 @@ class FilterSequencer extends React.Component {
     return (
       <div className="FilterSequencer" onTouchMove={this.touch} ref={el => { this.el = el }}>
         {values.map((value, index) => ({ value, index })).map(({ value, index}) => (
-          <div key={index} className={`FilterSequence-Bar ${activeBeat === index ? 'isPlaying' : ''}`} />
+          <div
+            key={index}
+            className={`FilterSequencer-Bar ${activeBeat === index ? 'isPlaying' : ''}`}
+            style={{ height: `${value / MIDI_MAX_VALUE * 100}%` }}
+          />
         ))}
       </div>
     )
