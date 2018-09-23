@@ -30,6 +30,18 @@ body {
   font-family: 'Fira Sans', sans-serif;
 }
 
+.MIDILab {
+  position: relative;
+  
+  &-Chooser {
+    position: fixed;
+    bottom: 0;
+    left:0;
+    z-index: 1;
+    background: $white;
+  }
+}
+
 .Pegboard {
   display: flex;
   width: 100vw;
@@ -53,13 +65,6 @@ body {
     justify-content: center;
     align-items: center;
     border: $dotPadding solid rgba($purple-lt, .5);
-
-    &:hover {
-      background: $purple-lt;
-      .Dot {
-        background: $purple;
-      }
-    }
   }
 
   &-Item {
@@ -77,6 +82,18 @@ body {
     height: $dotSize;
     background: rgba($purple-lt, .4);
     border-radius: 100%;
+
+    &.FirstClick {
+      background: $green;
+    }
+
+    &.SecondClick {
+      background: $orange;
+    }
+
+    &.Intermediate {
+      background: $white;
+    }
   }
 
 }
@@ -204,14 +221,15 @@ body {
   border: 1px solid $purple-lt;
   padding: $itemPadding;
   border-radius:$itemPadding * 2;
+  overflow: hidden;
   &-Inner {
     display: flex;
     justify-content: center;
     align-items: center;
   }
   &-Pad {
-    width: $dotSize * 3;
-    height: $dotSize * 3;
+    width: $dotSize;
+    height: $dotSize;
     background: $white;
     border-radius: 100%;
     transition: .05s ease-in;
