@@ -4,6 +4,7 @@ $itemPadding: 10px;
 $borderWidth: $itemPadding / 4;
 $dotSize: 1vw;
 $dotPadding: $itemPadding / 8;
+$uiPadding: 60px;
 
 // Colors
 $white: #fff;
@@ -32,25 +33,36 @@ body {
 
 .MIDILab {
   position: relative;
+  padding-bottom: $uiPadding;
+  background: $purple;
   
   &-Chooser {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     bottom: 0;
-    left:0;
-    z-index: 1;
-    background: $white;
+    left: 0;
+    right: 0;
+    height: $uiPadding;
+    padding: $dotPadding;
+    z-index: 2;
+    background: darken($purple, 10);
+    select {
+      font-family: 'Fira Sans';
+      color: $white;
+    }
   }
 }
 
 .Pegboard {
   display: flex;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - #{$uiPadding});
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-
-  background: linear-gradient($purple, darken($purple, 2));
+  background: linear-gradient($purple, darken($purple, 10));
 
   &-Row {
     flex: 1;
@@ -71,7 +83,8 @@ body {
     padding: $itemPadding;
     transition: padding .2s ease;
 
-    > * {
+    > *,
+    > * > * {
       width: 100%;
       height: 100%;
     }
@@ -93,9 +106,36 @@ body {
 
     &.Intermediate {
       background: $white;
+      transition: 1s ease;
     }
   }
 
+}
+
+.Instrument {
+  &-Active {
+    border: $borderWidth solid $white;
+    border-radius: $borderWidth;
+  }
+  &-Settings {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: $uiPadding;
+    background: darken($purple, 10);
+
+    &Inner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    label {
+      color: $white;
+      display: block;
+    }
+  }
 }
 
 .Slider {

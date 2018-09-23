@@ -5,16 +5,6 @@ import Pegboard from './ui/Pegboard'
 import Instrument from './Instrument'
 import { Slider, XYPad, Trigger, Sequencer, FilterSequencer } from './instruments'
 
-// const Instruments = [
-//   {
-//     x1: 0,
-//     x2: 3,
-//     y1: 0,
-//     y2: 3,
-//     render: props => <XYPad {...props} />,
-//   }
-// ]
-
 class MIDILab extends React.Component {
   static get instruments() {
     return {
@@ -32,11 +22,9 @@ class MIDILab extends React.Component {
       instruments: [],
       settings: null,
       coords: null,
+      activeInstrument: null,
     }
     this.handlePegboard = this.handlePegboard.bind(this)
-  }
-  handleInstrument(settings) {
-
   }
   handlePegboard(coords) {
     this.setState({ coords })
@@ -48,13 +36,14 @@ class MIDILab extends React.Component {
       coords: null,
       instruments: [...instruments, {
         id: nanoid(),
-        render: props => <Component {...props} />,
+        render: props => <Component {...props} vertical={coords.x2 - coords.x1 < coords.y2 - coords.y1} />,
         ...coords,
       }]
     }))
   }
   render() {
-    const { instruments, coords } = this.state
+    const { activeInstrument, instruments, coords } = this.state
+    console.log(coords)
     return (
       <div className="MIDILab">
         <Pegboard onSelect={this.handlePegboard}>
@@ -62,7 +51,12 @@ class MIDILab extends React.Component {
             .map((item, id) => ({ ...item, id }))
             .map(({ render, id, ...coords}) => (
               <Pegboard.Item {...coords} {...props} key={id}>
-                <Instrument onSelection={this.handleInstrument}>{render}</Instrument>
+                <Instrument
+                  active={(id === activeInstrument)}
+                  onSelect={() => this.setState({ activeInstrument: id })}
+                >
+                  {render}
+                </Instrument>
               </Pegboard.Item>
             ))
           }
@@ -70,7 +64,7 @@ class MIDILab extends React.Component {
         {coords && (
           <div className="MIDILab-Chooser">
             <select onChange={e => this.handleSelect(e.target.value)}>
-              <option value={null}>Instrument</option>
+              <option value={null}>Choose an instrument</option>
               {Object.keys(MIDILab.instruments)
                 .map(key => <option key={key}>{key}</option>)
               }
