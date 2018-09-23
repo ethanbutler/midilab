@@ -13,6 +13,7 @@ class Sequencer extends React.Component {
       activeBeat: null,
       duration: 100, // ms
       on: true,
+      velocity: 120,
     }
     this.play = this.play.bind(this)
     this.toggle = this.toggle.bind(this)

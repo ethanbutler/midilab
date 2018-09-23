@@ -43,7 +43,6 @@ class MIDILab extends React.Component {
   }
   render() {
     const { activeInstrument, instruments, coords } = this.state
-    console.log(coords)
     return (
       <div className="MIDILab">
         <Pegboard onSelect={this.handlePegboard}>
@@ -75,8 +74,6 @@ class MIDILab extends React.Component {
     )
   }
 }
-
-console.log('Hello!')
 
 render(
   <MIDILab />,

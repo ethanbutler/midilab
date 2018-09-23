@@ -14,9 +14,7 @@ app.get('/', (req, res) => {
 })
 
 http.listen(port, () => {
-  // socketInit(http)
-
-  console.log(`Listening!`)
+  socketInit(http)
   const address = `http://${ip.address()}:${port}`
   console.log(address)
   qrcode.generate(address)

@@ -9,6 +9,7 @@ module.exports = http => {
   io.on('connection', socket => {
     events.forEach(([event, EVENT, byte, usePitch, val1, val2]) => {
       socket.on(EVENT, params => {
+        console.log(EVENT, params)
         channels[params.channel][event](params[val1] || 0)(params[val2] || 0)
       })
     })
